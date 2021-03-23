@@ -5,7 +5,7 @@ import Control.Applicative ((<$>))
 import Control.Concurrent.STM
 import Control.Lens.Prism (_Just)
 import Lens.Family2 hiding (to)
-import Lens.Family2.Stock
+import Lens.Family2.Stock hiding (_Just)
 import Network.Xmpp.Concurrent.Basic
 import Network.Xmpp.Concurrent.Types
 import Network.Xmpp.Lens

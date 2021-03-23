@@ -11,7 +11,7 @@ import           Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import           Data.Maybe
 import           Lens.Family2 hiding (Prism)
-import           Lens.Family2.Stock hiding (Prism, from)
+import           Lens.Family2.Stock hiding (Prism, _Just, from)
 import           Network.Xmpp.Concurrent.Types
 import           Network.Xmpp.IM.Presence
 import           Network.Xmpp.Lens hiding (Lens, Traversal)
