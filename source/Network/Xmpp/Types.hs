@@ -1088,7 +1088,8 @@ jidFromTexts l d r = do
             guard $ Text.all (`Set.notMember` prohibMap) l''
             l''' <- nonEmpty l''
             return $ Just l'''
-    domainPart' <- forbidSeparators =<< SP.runStringPrep (SP.namePrepProfile False) (stripSuffix d)
+    -- strip dots again to handle stuff like "⒐" until we are rfc7622
+    domainPart' <- forbidSeparators . stripSuffix =<< SP.runStringPrep (SP.namePrepProfile False) (stripSuffix d)
     guard $ validDomainPart domainPart'
     guard $ validPartLength domainPart'
     domainPart <- nonEmpty domainPart'
@@ -1108,8 +1109,8 @@ jidFromTexts l d r = do
     validPartLength :: Text -> Bool
     validPartLength p = Text.length p > 0
                         && BS.length (Text.encodeUtf8 p) < 1024
-    -- RFC6122 §2.2
-    stripSuffix t = if Text.last t == '.' then Text.init t else t
+    -- RFC6122 §2.2; we strip ALL the dots to avoid looking for a fixed point and bailing out early
+    stripSuffix = Text.dropWhileEnd (== '.')
     -- "／" might be a valid JID, but stringprep messes it up, so we use
     forbidSeparators t = if Nothing == Text.find (flip elem ['/', '@']) t then Just t else Nothing
 
