@@ -168,6 +168,8 @@ Test-Suite tests
 
 Test-Suite runtests
   import: stuff
+  -- requires credentials to auth at a remote server
+  Buildable: False
   Type: exitcode-stdio-1.0
   hs-source-dirs: tests
   main-is: Run.hs
