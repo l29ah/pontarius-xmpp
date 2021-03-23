@@ -40,7 +40,7 @@ instance Arbitrary Jid where
             isProhibited x = Ranges.member x prohibited
                              || if node
                                 then False
-                                else x `elem` ['@','/']
+                                else x `elem` ['@','/', '＠', '／']
 
     shrink (Jid lp dp rp) = [ Jid lp' dp  rp  | lp' <- shrinkMaybe shrink lp]
                          ++ [ Jid lp  dp' rp  | dp' <- shrink dp]

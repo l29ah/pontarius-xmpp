@@ -1088,7 +1088,7 @@ jidFromTexts l d r = do
             guard $ Text.all (`Set.notMember` prohibMap) l''
             l''' <- nonEmpty l''
             return $ Just l'''
-    domainPart' <- SP.runStringPrep (SP.namePrepProfile False) (stripSuffix d)
+    domainPart' <- forbidSeparators =<< SP.runStringPrep (SP.namePrepProfile False) (stripSuffix d)
     guard $ validDomainPart domainPart'
     guard $ validPartLength domainPart'
     domainPart <- nonEmpty domainPart'
@@ -1110,6 +1110,8 @@ jidFromTexts l d r = do
                         && BS.length (Text.encodeUtf8 p) < 1024
     -- RFC6122 §2.2
     stripSuffix t = if Text.last t == '.' then Text.init t else t
+    -- "／" might be a valid JID, but stringprep messes it up, so we use
+    forbidSeparators t = if Nothing == Text.find (flip elem ['/', '@']) t then Just t else Nothing
 
 -- | Returns 'True' if the JID is /bare/, that is, it doesn't have a resource
 -- part, and 'False' otherwise.
