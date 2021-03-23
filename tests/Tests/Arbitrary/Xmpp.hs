@@ -9,15 +9,13 @@ import qualified Data.Text as Text
 import           Network.Xmpp.Internal hiding (elements)
 import           Test.QuickCheck
 import           Test.QuickCheck.Instances()
+import           Test.QuickCheck.Arbitrary.Generic
 import qualified Text.CharRanges as Ranges
 import qualified Text.StringPrep as SP
 import qualified Text.StringPrep.Profiles as SP
 
 import           Tests.Arbitrary.Common
 import           Tests.Arbitrary.Xml ()
-
-import           Data.Derive.Arbitrary
-import           Data.DeriveTH
 
 
 instance Arbitrary NonemptyText where
@@ -64,31 +62,94 @@ instance Arbitrary LangTag where
                               [LangTag lt lts' | lts' <- filter (not . Text.null)
                                                          <$> shrink lts]
 
+instance Arbitrary XmppFailure where
+  arbitrary = elements [StreamEndFailure, TcpConnectionFailure, XmppIllegalTcpDetails, TlsNoServerSupport, XmppNoStream, TlsStreamSecured, XmppOtherFailure]
+
 -- Auto-derive trivial instances
-concat <$> mapM (derive makeArbitrary) [ ''StanzaErrorType
-                                       , ''StanzaErrorCondition
-                                       , ''StanzaError
-                                       , ''StreamErrorInfo
-                                       , ''IQRequestType
-                                       , ''IQRequest
-                                       , ''IQResult
-                                       , ''IQError
-                                       , ''MessageType
-                                       , ''Message
-                                       , ''MessageError
-                                       , ''PresenceType
-                                       , ''Presence
-                                       , ''PresenceError
-                                       , ''Stanza
+instance Arbitrary StanzaErrorType where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
 
-                                       , ''SaslError
-                                       , ''SaslFailure
-                                       , ''StreamErrorCondition
+instance Arbitrary StanzaErrorCondition where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
 
-                                       -- , ''HandshakeFailed
-                                       -- , ''XmppTlsError
---                                       , ''AuthFailure
-                                       , ''Version
-                                       , ''ConnectionState
-                                       , ''TlsBehaviour
-                                       ]
+instance Arbitrary StanzaError where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary StreamErrorInfo where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary IQRequestType where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary IQRequest where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary IQResult where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary IQError where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary MessageType where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary Message where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary MessageError where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary PresenceType where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary Presence where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary PresenceError where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary Stanza where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary SaslError where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary SaslFailure where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary StreamErrorCondition where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary AuthFailure where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary Version where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary ConnectionState where
+  arbitrary = genericArbitrary
+  shrink = genericShrink
+
+instance Arbitrary TlsBehaviour where
+  arbitrary = genericArbitrary
+  shrink = genericShrink

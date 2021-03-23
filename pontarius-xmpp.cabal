@@ -32,9 +32,8 @@ Flag with-th {
   Default:     True
 }
 
-Library
-  hs-source-dirs: source
-  Exposed: True
+-- kludge for https://github.com/haskell/cabal/issues/2032
+common stuff
   Build-Depends: attoparsec           >=0.10.0.3
                , base                 >4 && <5
                , base64-bytestring    >=0.1.0.0
@@ -71,7 +70,6 @@ Library
                , xml-conduit          >=1.1.0.7
                , xml-picklers         >=0.3.3
                , xml-types            >=0.3.1
-
   If impl(ghc ==7.0.1) {
     Build-Depends: bytestring         >=0.9.1.9 && <=0.9.2.1
   } Else {
@@ -80,6 +78,11 @@ Library
   If flag(with-th) && impl(ghc >=7.6.1) {
     Build-Depends: template-haskell >=2.5
   }
+
+Library
+  import: stuff
+  hs-source-dirs: source
+  Exposed: True
   Exposed-modules: Network.Xmpp
                  , Network.Xmpp.IM
                  , Network.Xmpp.Internal
@@ -119,6 +122,7 @@ Library
   default-language:    Haskell2010
 
 Test-Suite tests
+  import: stuff
   Type: exitcode-stdio-1.0
   main-is: Main.hs
   Build-Depends: Cabal
@@ -129,7 +133,7 @@ Test-Suite tests
                , conduit
                , containers
                , data-default
-               , derive
+               , generic-arbitrary
                , hslogger
                , hspec
                , hspec-expectations
@@ -163,6 +167,7 @@ Test-Suite tests
   default-language:    Haskell2010
 
 Test-Suite runtests
+  import: stuff
   Type: exitcode-stdio-1.0
   hs-source-dirs: tests
   main-is: Run.hs
@@ -192,6 +197,7 @@ Test-Suite runtests
   default-language:    Haskell2010
 
 benchmark benchmarks
+  import: stuff
   type: exitcode-stdio-1.0
   build-depends: base
                , criterion

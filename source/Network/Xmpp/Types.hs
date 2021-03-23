@@ -5,6 +5,7 @@
 #endif
 
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
@@ -103,6 +104,7 @@ import qualified Data.Text as Text
 import           Data.Typeable(Typeable)
 import           Data.XML.Types as XML
 import qualified Data.Text.Encoding as Text
+import           GHC.Generics
 #if WITH_TEMPLATE_HASKELL
 import           Language.Haskell.TH
 import           Language.Haskell.TH.Quote
@@ -153,7 +155,7 @@ data Stanza = IQRequestS     !IQRequest
             | MessageErrorS  !MessageError
             | PresenceS      !Presence
             | PresenceErrorS !PresenceError
-              deriving (Eq, Show)
+              deriving (Eq, Show, Generic)
 
 type ExtendedAttribute = (XML.Name, Text)
 
@@ -166,10 +168,10 @@ data IQRequest = IQRequest { iqRequestID      :: !Text
                            , iqRequestType    :: !IQRequestType
                            , iqRequestPayload :: !Element
                            , iqRequestAttributes :: ![ExtendedAttribute]
-                           } deriving (Eq, Show)
+                           } deriving (Eq, Show, Generic)
 
 -- | The type of IQ request that is made.
-data IQRequestType = Get | Set deriving (Eq, Ord, Read, Show)
+data IQRequestType = Get | Set deriving (Eq, Ord, Read, Show, Generic)
 
 -- | A "response" Info/Query (IQ) stanza is either an 'IQError', an IQ stanza
 -- of  type "result" ('IQResult')
@@ -184,7 +186,7 @@ data IQResult = IQResult { iqResultID      :: !Text
                          , iqResultLangTag :: !(Maybe LangTag)
                          , iqResultPayload :: !(Maybe Element)
                          , iqResultAttributes :: ![ExtendedAttribute]
-                         } deriving (Eq, Show)
+                         } deriving (Eq, Show, Generic)
 
 -- | The answer to an IQ request that generated an error.
 data IQError = IQError { iqErrorID          :: !Text
@@ -194,7 +196,7 @@ data IQError = IQError { iqErrorID          :: !Text
                        , iqErrorStanzaError :: !StanzaError
                        , iqErrorPayload     :: !(Maybe Element) -- should this be []?
                        , iqErrorAttributes  :: ![ExtendedAttribute]
-                       } deriving (Eq, Show)
+                       } deriving (Eq, Show, Generic)
 
 -- | The message stanza. Used for /push/ type communication.
 data Message = Message { messageID      :: !(Maybe Text)
@@ -204,7 +206,7 @@ data Message = Message { messageID      :: !(Maybe Text)
                        , messageType    :: !MessageType
                        , messagePayload :: ![Element]
                        , messageAttributes :: ![ExtendedAttribute]
-                       } deriving (Eq, Show)
+                       } deriving (Eq, Show, Generic)
 
 -- | An empty message
 --
@@ -244,7 +246,7 @@ data MessageError = MessageError { messageErrorID          :: !(Maybe Text)
                                  , messageErrorStanzaError :: !StanzaError
                                  , messageErrorPayload     :: ![Element]
                                  , messageErrorAttributes  :: ![ExtendedAttribute]
-                                 } deriving (Eq, Show)
+                                 } deriving (Eq, Show, Generic)
 
 messageError :: MessageError
 messageError = MessageError { messageErrorID          = Nothing
@@ -303,7 +305,7 @@ data MessageType = -- | The message is sent in the context of a one-to-one chat
                    --
                    -- This is the /default/ value.
                  | Normal
-                 deriving (Eq, Read, Show)
+                 deriving (Eq, Read, Show, Generic)
 
 -- | The presence stanza. Used for communicating status updates.
 data Presence = Presence { presenceID      :: !(Maybe Text)
@@ -313,7 +315,7 @@ data Presence = Presence { presenceID      :: !(Maybe Text)
                          , presenceType    :: !PresenceType
                          , presencePayload :: ![Element]
                          , presenceAttributes :: ![ExtendedAttribute]
-                         } deriving (Eq, Show)
+                         } deriving (Eq, Show, Generic)
 
 -- | An empty presence.
 presence :: Presence
@@ -341,7 +343,7 @@ data PresenceError = PresenceError { presenceErrorID          :: !(Maybe Text)
                                    , presenceErrorStanzaError :: !StanzaError
                                    , presenceErrorPayload     :: ![Element]
                                    , presenceErrorAttributes  :: ![ExtendedAttribute]
-                                   } deriving (Eq, Show)
+                                   } deriving (Eq, Show, Generic)
 
 -- | @PresenceType@ holds Xmpp presence types. The "error" message type is left
 -- out as errors are using @PresenceError@.
@@ -354,7 +356,7 @@ data PresenceType = Subscribe    | -- ^ Sender wants to subscribe to presence
                                    --   should only be used by servers
                     Available    | -- ^ Sender wants to express availability
                                    --   (no type attribute is defined)
-                    Unavailable deriving (Eq, Read, Show)
+                    Unavailable deriving (Eq, Read, Show, Generic)
 
 -- | All stanzas (IQ, message, presence) can cause errors, which in the Xmpp
 -- stream looks like @\<stanza-kind to=\'sender\' type=\'error\'\>@ . These
@@ -365,7 +367,7 @@ data StanzaError = StanzaError
     , stanzaErrorCondition                    :: StanzaErrorCondition
     , stanzaErrorText                         :: Maybe (Maybe LangTag, NonemptyText)
     , stanzaErrorApplicationSpecificCondition :: Maybe Element
-    } deriving (Eq, Show)
+    } deriving (Eq, Show, Generic)
 
 -- | @StanzaError@s always have one of these types.
 data StanzaErrorType = Cancel   | -- ^ Error is unrecoverable - do not retry
@@ -373,7 +375,7 @@ data StanzaErrorType = Cancel   | -- ^ Error is unrecoverable - do not retry
                        Modify   | -- ^ Change the data and retry
                        Auth     | -- ^ Provide credentials and retry
                        Wait       -- ^ Error is temporary - wait and retry
-                       deriving (Eq, Read, Show)
+                       deriving (Eq, Read, Show, Generic)
 
 -- | Stanza errors are accommodated with one of the error conditions listed
 -- below.
@@ -415,7 +417,7 @@ data StanzaErrorCondition = BadRequest            -- ^ Malformed XML.
                           | UndefinedCondition    -- ^ Application-specific
                                                   --   condition.
                           | UnexpectedRequest     -- ^ Badly timed request.
-                            deriving (Eq, Read, Show)
+                            deriving (Eq, Read, Show, Generic)
 
 -- =============================================================================
 --  OTHER STUFF
@@ -425,7 +427,7 @@ data SaslFailure = SaslFailure { saslFailureCondition :: SaslError
                                , saslFailureText :: Maybe ( Maybe LangTag
                                                           , Text
                                                           )
-                               } deriving (Eq, Show)
+                               } deriving (Eq, Show, Generic)
 
 data SaslError = SaslAborted              -- ^ Client aborted.
                | SaslAccountDisabled      -- ^ The account has been temporarily
@@ -454,7 +456,7 @@ data SaslError = SaslAborted              -- ^ Client aborted.
                                           --   temporary error condition; the
                                           --   initiating entity is recommended
                                           --   to try again later.
-               deriving (Eq, Read, Show)
+               deriving (Eq, Read, Show, Generic)
 
 -- The documentation of StreamErrorConditions is copied from
 -- http://xmpp.org/rfcs/rfc6120.html#streams-error-conditions
@@ -571,18 +573,18 @@ data StreamErrorCondition
                                -- initiating entity in the stream header
                                -- specifies a version of XMPP that is not
                                -- supported by the server.
-      deriving (Eq, Read, Show)
+      deriving (Eq, Read, Show, Generic)
 
 -- | Encapsulates information about an XMPP stream error.
 data StreamErrorInfo = StreamErrorInfo
     { errorCondition :: !StreamErrorCondition
     , errorText      :: !(Maybe (Maybe LangTag, NonemptyText))
     , errorXml       :: !(Maybe Element)
-    } deriving (Show, Eq)
+    } deriving (Show, Eq, Generic)
 
 data XmppTlsError = XmppTlsError TLSError
                   | XmppTlsException TLSException
-                    deriving (Show, Eq, Typeable)
+                    deriving (Show, Eq, Typeable, Generic)
 
 -- | Signals an XMPP stream error or another unpredicted stream-related
 -- situation. This error is fatal, and closes the XMPP stream.
@@ -621,7 +623,7 @@ data XmppFailure = StreamErrorFailure StreamErrorInfo -- ^ An error XML stream
                  | XmppIOException IOException -- ^ An 'IOException'
                                                -- occurred
                  | XmppInvalidXml String -- ^ Received data is not valid XML
-                 deriving (Show, Eq, Typeable)
+                 deriving (Show, Eq, Typeable, Generic)
 
 instance Exception XmppFailure
 
@@ -639,7 +641,7 @@ data AuthFailure = -- | No mechanism offered by the server was matched
                    -- | Other failure; more information is available
                    -- in the log
                  | AuthOtherFailure
-                 deriving (Eq, Show)
+                 deriving (Eq, Show, Generic)
 
 -- =============================================================================
 --  XML TYPES
@@ -649,7 +651,7 @@ data AuthFailure = -- | No mechanism offered by the server was matched
 -- 2.13, which in turn is lesser than 12.3.
 
 data Version = Version { majorVersion :: !Integer
-                       , minorVersion :: !Integer } deriving (Eq, Read, Show)
+                       , minorVersion :: !Integer } deriving (Eq, Read, Show, Generic)
 
 -- If the major version numbers are not equal, compare them. Otherwise, compare
 -- the minor version numbers.
@@ -769,7 +771,7 @@ data ConnectionState
     | Plain   -- ^ Stream established, but not secured via TLS
     | Secured -- ^ Stream established and secured via TLS
     | Finished -- ^ Stream was closed
-      deriving (Show, Eq, Typeable)
+      deriving (Show, Eq, Typeable, Generic)
 
 -- | Defines operations for sending, receiving, flushing, and closing on a
 -- stream.
@@ -1300,3 +1302,4 @@ data TlsBehaviour = RequireTls -- ^ Require the use of TLS; disconnect if it's
                   | PreferPlain  -- ^ Negotitate TLS only if the server requires
                                  -- it
                   | RefuseTls  -- ^ Never secure the stream with TLS.
+                    deriving (Eq, Show, Generic)
