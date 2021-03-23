@@ -1,8 +1,8 @@
+Cabal-Version: 2.2
 Name:          pontarius-xmpp
 Version:       0.5.6.3
-Cabal-Version: >= 1.10
 Build-Type:    Simple
-License:       BSD3
+License:       BSD-3-Clause
 License-File:  LICENSE.md
 Copyright:     Dmitry Astapov, Pierre Kovalev, Mahdi Abdinejadi, Jon Kristensen,
                IETF Trust, Philipp Balzarek, Sergey Alirzaev
@@ -50,7 +50,8 @@ Library
                , exceptions           >=0.6
                , hslogger             >=1.1.0
                , iproute              >=1.2.4
-               , lens-family          < 1.3
+               , lens                 ^>= 5.0.1
+               , lens-family          ^>= 2.1
                , lifted-base          >=0.1.0.1
                , mtl                  >=2.0.0.0
                , network              >=2.3.1.0

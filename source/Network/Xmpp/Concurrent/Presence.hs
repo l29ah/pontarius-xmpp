@@ -3,6 +3,7 @@ module Network.Xmpp.Concurrent.Presence where
 
 import Control.Applicative ((<$>))
 import Control.Concurrent.STM
+import Control.Lens.Prism (_Just)
 import Lens.Family2 hiding (to)
 import Lens.Family2.Stock
 import Network.Xmpp.Concurrent.Basic
