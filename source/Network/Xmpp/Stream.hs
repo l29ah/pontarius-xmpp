@@ -37,7 +37,7 @@ import           Data.Word (Word16)
 import           Data.XML.Pickle
 import           Data.XML.Types
 import qualified GHC.IO.Exception as GIE
-import           Network.Socket hiding (Stream,connect)
+import           Network.Socket hiding (Closed, Stream, connect)
 import           Network.DNS hiding (encode, lookup)
 import qualified Network.Socket as S
 import           Network.Socket (AddrInfo)
