@@ -162,7 +162,7 @@ Test-Suite tests
                , Tests.Parsers
                , Tests.Picklers
                , Tests.Stream
-  ghc-options: -O2 -fno-warn-orphans
+  ghc-options: -O2 -fno-warn-orphans -fconstraint-solver-iterations=10
   default-language:    Haskell2010
 
 Test-Suite runtests
