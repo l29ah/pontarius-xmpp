@@ -118,7 +118,6 @@ Library
 
   if flag(with-th) && impl(ghc >= 7.6.1)
     CPP-Options: -DWITH_TEMPLATE_HASKELL
-  GHC-Options: -W -fwarn-tabs
   default-language:    Haskell2010
 
 Test-Suite tests
@@ -163,7 +162,7 @@ Test-Suite tests
                , Tests.Parsers
                , Tests.Picklers
                , Tests.Stream
-  ghc-options: -W -O2 -fno-warn-orphans
+  ghc-options: -O2 -fno-warn-orphans
   default-language:    Haskell2010
 
 Test-Suite runtests
@@ -177,7 +176,7 @@ Test-Suite runtests
                , Run.SendReceive
                , Run.Google
                , Run.Config
-  GHC-Options: -W -threaded
+  GHC-Options: -threaded
   Build-Depends: base
                , HUnit
                , configurator
