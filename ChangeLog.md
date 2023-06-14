@@ -1,6 +1,7 @@
 # 0.5.1 to 0.6.0
 * Changed roster update callback to take RosterUpdate type
 * Added onrosterPushL lens
+* Removed legacy `crypto-random` (this caused issues when compiling with GHC 9.2.5)
 
 # 0.5.0 to 0.5.1
 * Fixed input logger choking on long non-ascii messages
