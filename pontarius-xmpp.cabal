@@ -17,7 +17,7 @@ Description:   Pontarius XMPP is a work in progress implementation of RFC 6120
                While in alpha, Pontarius XMPP works quite well and fulfills most
                requirements of the RFCs.
 Category:      Network
-Tested-With:   GHC == 9.2.4
+Tested-With:   GHC == 9.2.7
 
 Extra-Source-Files: README.md
                   , ChangeLog.md
@@ -215,4 +215,4 @@ Source-Repository head
 Source-Repository this
   Type: git
   Location: https://github.com/l29ah/pontarius-xmpp.git
-  Tag: 0.5.6.5
+  Tag: 0.5.6.6
