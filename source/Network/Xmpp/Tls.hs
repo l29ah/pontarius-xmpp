@@ -11,7 +11,6 @@ import qualified       Control.Exception.Lifted as Ex
 import                 Control.Monad
 import                 Control.Monad.Except
 import                 Control.Monad.State.Strict
-import "crypto-random" Crypto.Random
 import qualified       Data.ByteString as BS
 import qualified       Data.ByteString.Char8 as BSC8
 import qualified       Data.ByteString.Lazy as BL
