@@ -7,6 +7,7 @@ module Network.Xmpp.Sasl.Mechanisms.Scram
   where
 
 import           Control.Applicative ((<$>))
+import           Control.Monad
 import           Control.Monad.Except
 import           Control.Monad.State.Strict
 import qualified Crypto.Classes          as Crypto

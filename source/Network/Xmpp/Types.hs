@@ -90,6 +90,7 @@ module Network.Xmpp.Types
 import           Control.Applicative ((<$>), (<|>), many)
 import           Control.Concurrent.STM
 import           Control.Exception
+import           Control.Monad
 import           Control.Monad.Except
 import qualified Data.Attoparsec.Text as AP
 import qualified Data.ByteString as BS

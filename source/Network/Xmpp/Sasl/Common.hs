@@ -6,6 +6,7 @@
 module Network.Xmpp.Sasl.Common where
 
 import           Control.Applicative ((<$>))
+import           Control.Monad
 import           Control.Monad.Except
 import qualified Data.Attoparsec.ByteString.Char8 as AP
 import           Data.Bits
