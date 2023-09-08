@@ -1,6 +1,6 @@
 Cabal-Version: 2.2
 Name:          pontarius-xmpp
-Version:       0.5.6.7
+Version:       0.5.6.8
 Build-Type:    Simple
 License:       BSD-3-Clause
 License-File:  LICENSE.md
@@ -214,4 +214,4 @@ Source-Repository head
 Source-Repository this
   Type: git
   Location: https://github.com/l29ah/pontarius-xmpp.git
-  Tag: 0.5.6.7
+  Tag: 0.5.6.8
