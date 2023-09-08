@@ -1,4 +1,5 @@
 {-# OPTIONS_HADDOCK hide #-}
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PackageImports #-}
@@ -193,7 +194,9 @@ connectTls config params host = do
 wrapExceptions :: IO a -> IO (Either XmppFailure a)
 wrapExceptions f = Ex.catches (liftM Right $ f)
                  [ Ex.Handler $ return . Left . XmppIOException
+#if !MIN_VERSION_tls(1,8,0)
                  , Ex.Handler $ wrap . XmppTlsError
+#endif
                  , Ex.Handler $ wrap . XmppTlsException
                  , Ex.Handler $ return . Left
                  ]
