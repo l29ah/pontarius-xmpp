@@ -955,7 +955,7 @@ jid = QuasiQuoter { quoteExp = \s -> do
 
 -- | Synonym for 'jid'
 jidQ :: QuasiQuoter
-jidQ = jidQ
+jidQ = jid
 #endif
 
 -- | The partial order of "definiteness". JID1 is less than or equal JID2 iff
