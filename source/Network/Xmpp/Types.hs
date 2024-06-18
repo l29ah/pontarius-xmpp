@@ -1275,9 +1275,11 @@ xmppDefaultParamsStrong :: ClientParams
 xmppDefaultParamsStrong = (defaultParamsClient "" BS.empty)
                         { clientSupported = def
                             { supportedCiphers = ciphersuite_strong
+#if !MIN_VERSION_tls(2,0,0)
                                                  ++ [ cipher_AES256_SHA1
                                                     , cipher_AES128_SHA1
                                                     ]
+#endif
                             }
                         }
 
