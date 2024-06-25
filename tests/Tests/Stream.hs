@@ -10,7 +10,6 @@ import           Data.XML.Types
 import           Test.Hspec
 import           Test.Tasty
 import           Test.Tasty.HUnit
-import           Test.Tasty.Hspec
 import           Test.Tasty.TH
 
 import           Network.Xmpp.Internal
