@@ -515,25 +515,24 @@ tlsParamsL inj sc@StreamConfiguration{tlsParams = x}
 -----------------
 
 clientServerIdentificationL  :: Lens ClientParams (String, BS.ByteString)
-clientServerIdentificationL inj cp@ClientParams{clientServerIdentification = x}
-    = (\x' -> cp{clientServerIdentification = x'}) <$> inj x
+clientServerIdentificationL inj cp
+    = (\x' -> cp{clientServerIdentification = x'}) <$> inj (clientServerIdentification cp)
 
 clientSupportedL  :: Lens ClientParams Supported
-clientSupportedL inj cp@ClientParams{clientSupported = x}
-    = (\x' -> cp{clientSupported = x'}) <$> inj x
+clientSupportedL inj cp
+    = (\x' -> cp{clientSupported = x'}) <$> inj (clientSupported cp)
 
 clientUseServerNameIndicationL  :: Lens ClientParams Bool
-clientUseServerNameIndicationL inj
-    cp@ClientParams{clientUseServerNameIndication = x}
-    = (\x' -> cp{clientUseServerNameIndication = x'}) <$> inj x
+clientUseServerNameIndicationL inj cp
+    = (\x' -> cp{clientUseServerNameIndication = x'}) <$> inj (clientUseServerNameIndication cp)
 
 supportedCiphersL :: Lens Supported [Cipher]
-supportedCiphersL inj s@Supported{supportedCiphers = x}
-    = (\x' -> s{supportedCiphers = x'}) <$> inj x
+supportedCiphersL inj s
+    = (\x' -> s{supportedCiphers = x'}) <$> inj (supportedCiphers s)
 
 supportedVersionsL :: Lens Supported [TLS.Version]
-supportedVersionsL inj s@Supported{supportedVersions = x}
-    = (\x' -> s{supportedVersions = x'}) <$> inj x
+supportedVersionsL inj s
+    = (\x' -> s{supportedVersions = x'}) <$> inj (supportedVersions s)
 
 -- SessionConfiguration
 -----------------------
