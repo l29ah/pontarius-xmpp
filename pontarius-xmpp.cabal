@@ -69,11 +69,7 @@ common stuff
                , xml-conduit          >=1.1.0.7
                , xml-picklers         >=0.3.3
                , xml-types            >=0.3.1
-  If impl(ghc ==7.0.1) {
-    Build-Depends: bytestring         >=0.9.1.9 && <=0.9.2.1
-  } Else {
-    Build-Depends: bytestring         >=0.9.1.9
-  }
+               , bytestring           >=0.9.1.9
   If flag(with-th) && impl(ghc >=7.6.1) {
     Build-Depends: template-haskell >=2.5
   }
