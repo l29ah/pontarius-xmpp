@@ -28,7 +28,7 @@ import           Control.Monad.Except
 import qualified Data.List as List
 import qualified Data.Map as Map
 import           Data.Maybe
-import           Data.Text as Text
+import           Data.Text as Text hiding (show)
 import           Data.XML.Types
 import           Network.Socket
 import           Network.Xmpp.Concurrent.Basic
